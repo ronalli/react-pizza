@@ -1,17 +1,18 @@
 import './scss/app.scss';
-import { Categories, Header, BlockPizza } from './components';
+import { Categories, Header, BlockPizza, SortPizza } from './components';
 
-function App() {
+const App = () => {
   return (
-    <div class='wrapper'>
+    <div className='wrapper'>
       <Header />
-      <div class='content'>
-        <div class='container'>
-          <div class='content__top'>
+      <div className='content'>
+        <div className='container'>
+          <div className='content__top'>
             <Categories />
+            <SortPizza />
           </div>
-          <h2 class='content__title'>Все пиццы</h2>
-          <div class='content__items'>
+          <h2 className='content__title'>Все пиццы</h2>
+          <div className='content__items'>
             <BlockPizza />
             <BlockPizza />
             <BlockPizza />
@@ -21,6 +22,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
