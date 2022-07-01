@@ -1,5 +1,6 @@
 import './scss/app.scss';
 import { Categories, Header, BlockPizza, SortPizza } from './components';
+import pizza from './assets/pizza.json';
 
 const App = () => {
   return (
@@ -13,10 +14,9 @@ const App = () => {
           </div>
           <h2 className='content__title'>Все пиццы</h2>
           <div className='content__items'>
-            <BlockPizza />
-            <BlockPizza />
-            <BlockPizza />
-            <BlockPizza />
+            {pizza.map((item) => {
+              return <BlockPizza key={item.id} {...item} />;
+            })}
           </div>
         </div>
       </div>
