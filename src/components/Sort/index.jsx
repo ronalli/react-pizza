@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const SortPizza = () => {
+  const [isVisiblePopup, setIsVisiblePopup] = useState(false);
+  const [selectedField, setSelectedField] = useState(0);
+  const sortFields = ['популярности', 'цене', 'алфавиту'];
+
+  const selectedFieldSort = (idx) => {
+    setSelectedField(idx);
+    setIsVisiblePopup(false);
+  };
+
   return (
     <div className='sort'>
       <div className='sort__label'>
@@ -17,15 +26,27 @@ const SortPizza = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>популярности</span>
+        <span
+          tabIndex='1'
+          onClick={() => setIsVisiblePopup(!isVisiblePopup)}
+          onBlur={() => setIsVisiblePopup(false)}
+        >
+          {sortFields[selectedField]}
+        </span>
       </div>
-      <div className='sort__popup'>
-        <ul>
-          <li className='active'>популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul>
-      </div>
+      {isVisiblePopup && (
+        <div className='sort__popup'>
+          <ul>
+            {sortFields.map((item, idx) => {
+              return (
+                <li key={idx} onClick={() => selectedFieldSort(idx)}>
+                  {item}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
