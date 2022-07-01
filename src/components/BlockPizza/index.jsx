@@ -6,6 +6,14 @@ const BlockPizza = ({ imageUrl, title, types, sizes, price }) => {
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(0);
 
+  const selectionType = (type) => {
+    type === activeType ? setActiveType('') : setActiveType(type);
+  };
+
+  const selectionSize = (idx) => {
+    idx === activeSize ? setActiveSize('') : setActiveSize(idx);
+  };
+
   return (
     <div className='pizza-block'>
       <img className='pizza-block__image' src={imageUrl} alt='Pizza' />
@@ -16,7 +24,7 @@ const BlockPizza = ({ imageUrl, title, types, sizes, price }) => {
             return (
               <li
                 className={activeType === type ? 'active' : ''}
-                onClick={() => setActiveType(type)}
+                onClick={() => selectionType(type)}
                 key={type + idx}
               >
                 {typesPizza[type]}
@@ -29,7 +37,7 @@ const BlockPizza = ({ imageUrl, title, types, sizes, price }) => {
             return (
               <li
                 className={activeSize === idx ? 'active' : ''}
-                onClick={() => setActiveSize(idx)}
+                onClick={() => selectionSize(idx)}
                 key={size + idx}
               >
                 {size} см.
