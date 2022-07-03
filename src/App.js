@@ -1,8 +1,16 @@
 import './scss/app.scss';
 import { Categories, Header, BlockPizza, SortPizza } from './components';
-import pizza from './assets/pizza.json';
+import { useEffect, useState } from 'react';
 
 const App = () => {
+  const [pizza, setPizza] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/data')
+      .then((res) => res.json())
+      .then((data) => setPizza(data));
+  }, []);
+
   return (
     <div className='wrapper'>
       <Header />
@@ -14,9 +22,13 @@ const App = () => {
           </div>
           <h2 className='content__title'>Все пиццы</h2>
           <div className='content__items'>
-            {pizza.map((item) => {
-              return <BlockPizza key={item.id} {...item} />;
-            })}
+            {pizza.length ? (
+              pizza.map((item) => {
+                return <BlockPizza key={item.id} {...item} />;
+              })
+            ) : (
+              <h3>Данных нет</h3>
+            )}
           </div>
         </div>
       </div>

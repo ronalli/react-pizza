@@ -27,9 +27,9 @@ const SortPizza = () => {
         </svg>
         <b>Сортировка по:</b>
         <span
-          tabIndex='1'
+          // tabIndex='1'
           onClick={() => setIsVisiblePopup(!isVisiblePopup)}
-          onBlur={() => setIsVisiblePopup(false)}
+          // onBlur={() => setIsVisiblePopup(false)}
         >
           {sortFields[selectedField]}
         </span>
