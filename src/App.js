@@ -1,14 +1,24 @@
 import './scss/app.scss';
-import { Categories, Header, BlockPizza, SortPizza } from './components';
+import {
+  Categories,
+  Header,
+  BlockPizza,
+  SortPizza,
+  Skeleton,
+} from './components';
 import { useEffect, useState } from 'react';
 
 const App = () => {
   const [pizza, setPizza] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch('http://localhost:3001/data')
       .then((res) => res.json())
-      .then((data) => setPizza(data));
+      .then((data) => {
+        setPizza(data);
+        setIsLoading(false);
+      });
   }, []);
 
   return (
@@ -22,13 +32,13 @@ const App = () => {
           </div>
           <h2 className='content__title'>Все пиццы</h2>
           <div className='content__items'>
-            {pizza.length ? (
-              pizza.map((item) => {
-                return <BlockPizza key={item.id} {...item} />;
-              })
-            ) : (
-              <h3>Данных нет</h3>
-            )}
+            {!isLoading
+              ? pizza.map((item) => {
+                  return <BlockPizza key={item.id} {...item} />;
+                })
+              : [...new Array(10)].map((_, idx) => {
+                  return <Skeleton key={idx} />;
+                })}
           </div>
         </div>
       </div>
