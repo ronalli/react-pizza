@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 
 import { Header } from './components';
+import Cart from './pages/Cart';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 
@@ -15,6 +16,7 @@ const App = () => {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='*' element={<NotFound />} />
+						<Route path='/cart' element={<Cart />}/>
           </Routes>
         </div>
       </div>
