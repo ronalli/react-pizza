@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 
 const SortPizza = ({ sortType, onChangeSortType }) => {
   const [isVisiblePopup, setIsVisiblePopup] = useState(false);
-  const sortFields = ['популярности', 'цене', 'алфавиту'];
+  const sortFields = [
+    { title: 'популярности', sortProperty: 'rating' },
+    { title: 'цене', sortProperty: 'price' },
+    { title: 'алфавиту', sortProperty: 'title' },
+  ];
 
-  const selectedFieldSort = (idx) => {
-    onChangeSortType(idx);
+  const selectedFieldSort = (obj) => {
+    onChangeSortType(obj);
     setIsVisiblePopup(false);
   };
 
@@ -26,7 +30,7 @@ const SortPizza = ({ sortType, onChangeSortType }) => {
         </svg>
         <b>Сортировка по:</b>
         <span onClick={() => setIsVisiblePopup(!isVisiblePopup)}>
-          {sortFields[sortType]}
+          {sortType.title}
         </span>
       </div>
       {isVisiblePopup && (
@@ -34,8 +38,8 @@ const SortPizza = ({ sortType, onChangeSortType }) => {
           <ul>
             {sortFields.map((item, idx) => {
               return (
-                <li key={idx} onClick={() => selectedFieldSort(idx)}>
-                  {item}
+                <li key={idx} onClick={() => selectedFieldSort(item)}>
+                  {item.title}
                 </li>
               );
             })}

@@ -6,17 +6,22 @@ const Home = () => {
   const [pizza, setPizza] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState(0);
-  const [sortType, setSortType] = useState(0);
+  const [sortType, setSortType] = useState({
+    title: 'популярности',
+    sortProperty: 'rating',
+  });
 
   useEffect(() => {
     setIsLoading(true);
-    fetch('http://localhost:3001/data')
+    const category = activeCategory > 0 ? `category=${activeCategory}` : '';
+    const sort = sortType.sortProperty;
+    fetch(`http://localhost:3001/data?${category}&_sort=${sort}&_order=desc`)
       .then((res) => res.json())
       .then((data) => {
         setPizza(data);
         setIsLoading(false);
       });
-  }, []);
+  }, [sortType, activeCategory]);
 
   return (
     <>
