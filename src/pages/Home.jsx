@@ -5,8 +5,11 @@ import { Categories, BlockPizza, SortPizza, Skeleton } from '../components/';
 const Home = () => {
   const [pizza, setPizza] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState(0);
+  const [sortType, setSortType] = useState(0);
 
   useEffect(() => {
+    setIsLoading(true);
     fetch('http://localhost:3001/data')
       .then((res) => res.json())
       .then((data) => {
@@ -18,8 +21,14 @@ const Home = () => {
   return (
     <>
       <div className='content__top'>
-        <Categories />
-        <SortPizza />
+        <Categories
+          activeCategory={activeCategory}
+          onChangeCategory={(id) => setActiveCategory(id)}
+        />
+        <SortPizza
+          sortType={sortType}
+          onChangeSortType={(i) => setSortType(i)}
+        />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>

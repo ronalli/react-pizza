@@ -9,9 +9,7 @@ const categoriesPizza = [
   'Закрытые',
 ];
 
-const Categories = () => {
-  const [activeCategory, setActiveCategory] = useState(0);
-
+const Categories = ({ activeCategory, onChangeCategory }) => {
   return (
     <>
       <div className='categories'>
@@ -19,7 +17,7 @@ const Categories = () => {
           {categoriesPizza.map((item, idx) => (
             <li
               key={idx}
-              onClick={() => setActiveCategory(idx)}
+              onClick={() => onChangeCategory(idx)}
               className={activeCategory === idx ? 'active' : ''}
             >
               {item}

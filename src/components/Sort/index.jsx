@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 
-const SortPizza = () => {
+const SortPizza = ({ sortType, onChangeSortType }) => {
   const [isVisiblePopup, setIsVisiblePopup] = useState(false);
-  const [selectedField, setSelectedField] = useState(0);
   const sortFields = ['популярности', 'цене', 'алфавиту'];
 
   const selectedFieldSort = (idx) => {
-    setSelectedField(idx);
+    onChangeSortType(idx);
     setIsVisiblePopup(false);
   };
 
@@ -26,12 +25,8 @@ const SortPizza = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span
-          // tabIndex='1'
-          onClick={() => setIsVisiblePopup(!isVisiblePopup)}
-          // onBlur={() => setIsVisiblePopup(false)}
-        >
-          {sortFields[selectedField]}
+        <span onClick={() => setIsVisiblePopup(!isVisiblePopup)}>
+          {sortFields[sortType]}
         </span>
       </div>
       {isVisiblePopup && (
