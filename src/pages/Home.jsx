@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { Categories, BlockPizza, SortPizza, Skeleton } from '../components/';
 
-const Home = () => {
+const Home = ({ searchValue }) => {
   const [pizza, setPizza] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState(0);
@@ -18,10 +18,14 @@ const Home = () => {
     fetch(`http://localhost:3001/data?${category}&_sort=${sort}&_order=desc`)
       .then((res) => res.json())
       .then((data) => {
-        setPizza(data);
+        setPizza(
+          data.filter((el) =>
+            el.title.toLowerCase().includes(searchValue.toLowerCase())
+          )
+        );
         setIsLoading(false);
       });
-  }, [sortType, activeCategory]);
+  }, [sortType, activeCategory, searchValue]);
 
   return (
     <>

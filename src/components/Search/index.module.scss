@@ -1,0 +1,31 @@
+.root {
+	position: relative;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: center;
+	margin-bottom: 35px;
+	font-size: 20px;
+	.input {
+		height: 45px;
+		padding: 10px 30px;
+		border: 2px solid rgb(202, 201, 201);
+		border-radius: 15px;
+		font-size: 16px;
+		transition: all 0.15s ease-in-out;
+		&:focus {
+			border: 2px solid rgb(146, 145, 145);
+		}
+	}
+	.icon {
+		position: absolute;
+		width: 20px;
+		height: 20px;
+		left: 85px;
+		fill: rgb(224, 26, 26);
+		 
+	}
+	span {
+		margin-right: 15px;
+	}
+	
+}

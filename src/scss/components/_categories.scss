@@ -2,7 +2,8 @@
 
 .categories {
   ul {
-    display: flex;
+		display: grid;
+		grid-auto-flow: column;
     li {
       background-color: #f9f9f9;
       padding: 13px 30px;
@@ -12,7 +13,6 @@
       cursor: pointer;
       transition: background-color 0.1s ease-in-out;
       @include noselect();
-
       &:hover {
         background-color: darken(#f9f9f9, 2%);
       }
