@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { Categories, BlockPizza, SortPizza, Skeleton } from '../components/';
+import NotFound from './NotFound';
 
 const Home = ({ searchValue }) => {
   const [pizza, setPizza] = useState([]);
@@ -15,14 +16,12 @@ const Home = ({ searchValue }) => {
     setIsLoading(true);
     const category = activeCategory > 0 ? `category=${activeCategory}` : '';
     const sort = sortType.sortProperty;
-    fetch(`http://localhost:3001/data?${category}&_sort=${sort}&_order=desc`)
+    fetch(
+      `http://localhost:3001/data?${category}&_sort=${sort}&_order=desc&title_like=${searchValue}`
+    )
       .then((res) => res.json())
       .then((data) => {
-        setPizza(
-          data.filter((el) =>
-            el.title.toLowerCase().includes(searchValue.toLowerCase())
-          )
-        );
+        setPizza(data);
         setIsLoading(false);
       });
   }, [sortType, activeCategory, searchValue]);
@@ -48,6 +47,7 @@ const Home = ({ searchValue }) => {
           : [...new Array(10)].map((_, idx) => {
               return <Skeleton key={idx} />;
             })}
+        {!pizza.length && <NotFound />}
       </div>
     </>
   );
