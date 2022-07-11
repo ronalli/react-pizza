@@ -1,10 +1,25 @@
 .root {
 	position: relative;
 	display: grid;
-	grid-template-columns: auto 1fr;
 	align-items: center;
-	margin-bottom: 35px;
+	margin: 0 65px 45px 65px;
 	font-size: 20px;
+	.search {
+		position: absolute;
+		opacity: 0.7;
+		width: 20px;
+		height: 20px;
+		left: 10px;
+		 
+	}
+	.cancel {
+		position: absolute;
+		opacity: 0.7;
+		width: 20px;
+		height: 20px;
+		right: 15px;
+		cursor: pointer;
+	}
 	.input {
 		height: 45px;
 		padding: 10px 30px;
@@ -16,14 +31,7 @@
 			border: 2px solid rgb(146, 145, 145);
 		}
 	}
-	.icon {
-		position: absolute;
-		width: 20px;
-		height: 20px;
-		left: 85px;
-		fill: rgb(224, 26, 26);
-		 
-	}
+	
 	span {
 		margin-right: 15px;
 	}
