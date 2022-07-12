@@ -1,9 +1,13 @@
+import axios from 'axios';
 import React from 'react';
+import { useContext } from 'react';
 import { useEffect, useState } from 'react';
+import { AppContext } from '../App';
 import { Categories, BlockPizza, SortPizza, Skeleton } from '../components/';
 import NotFound from './NotFound';
 
-const Home = ({ searchValue }) => {
+const Home = () => {
+  const { searchValue } = useContext(AppContext);
   const [pizza, setPizza] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState(0);
@@ -16,12 +20,12 @@ const Home = ({ searchValue }) => {
     setIsLoading(true);
     const category = activeCategory > 0 ? `category=${activeCategory}` : '';
     const sort = sortType.sortProperty;
-    fetch(
-      `http://localhost:3001/data?${category}&_sort=${sort}&_order=desc&title_like=${searchValue}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setPizza(data);
+    axios
+      .get(
+        `http://localhost:3001/data?${category}&_sort=${sort}&_order=desc&title_like=${searchValue}`
+      )
+      .then((res) => {
+        setPizza(res.data);
         setIsLoading(false);
       });
   }, [sortType, activeCategory, searchValue]);

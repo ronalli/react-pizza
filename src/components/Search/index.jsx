@@ -2,8 +2,11 @@ import React from 'react';
 import style from './index.module.scss';
 import iconSearch from '../../assets/img/search.svg';
 import iconCancel from '../../assets/img/cancel.svg';
+import { useContext } from 'react';
+import { AppContext } from '../../App';
 
-function Search({ searchValue, setSearchValue }) {
+function Search() {
+  const { searchValue, setSearchValue } = useContext(AppContext);
   return (
     <div className={style.root}>
       <input
