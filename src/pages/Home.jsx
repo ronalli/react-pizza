@@ -1,8 +1,12 @@
 import axios from 'axios';
 import React from 'react';
+import { useSelector } from 'react-redux';
+
 import { useContext } from 'react';
 import { useEffect, useState } from 'react';
 import { AppContext } from '../App';
+import { setActiveCategory } from '../redux/slices/filterSlice';
+
 import { Categories, BlockPizza, SortPizza, Skeleton } from '../components/';
 import NotFound from './NotFound';
 
@@ -10,11 +14,12 @@ const Home = () => {
   const { searchValue } = useContext(AppContext);
   const [pizza, setPizza] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState(0);
   const [sortType, setSortType] = useState({
     title: 'популярности',
     sortProperty: 'rating',
   });
+
+  const activeCategory = useSelector((state) => state.filter.value);
 
   useEffect(() => {
     setIsLoading(true);
