@@ -3,18 +3,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setActiveCategory } from '../../redux/slices/filterSlice';
 
 const Categories = () => {
-  const categoriesPizza = useSelector((state) => state.filter.categories);
-  const activeCategory = useSelector((state) => state.filter.value);
+  const { categories, categoryId } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
   return (
     <>
       <div className='categories'>
         <ul>
-          {categoriesPizza.map((item, idx) => (
+          {categories.map((item, idx) => (
             <li
               key={idx}
               onClick={() => dispatch(setActiveCategory(idx))}
-              className={activeCategory === idx ? 'active' : ''}
+              className={categoryId === idx ? 'active' : ''}
             >
               {item}
             </li>

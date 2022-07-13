@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSort } from '../../redux/slices/filterSlice';
 
-const SortPizza = ({ sortType, onChangeSortType }) => {
+const SortPizza = () => {
+  const dispatch = useDispatch();
+
   const [isVisiblePopup, setIsVisiblePopup] = useState(false);
-  const sortFields = [
-    { title: 'популярности', sortProperty: 'rating' },
-    { title: 'цене', sortProperty: 'price' },
-    { title: 'алфавиту', sortProperty: 'title' },
-  ];
+  const sortFields = useSelector((state) => state.filter.sortFields);
+  const sortType = useSelector((state) => state.filter.sort);
 
   const selectedFieldSort = (obj) => {
-    onChangeSortType(obj);
+    dispatch(setSort(obj));
     setIsVisiblePopup(false);
   };
 
