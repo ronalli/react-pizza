@@ -1,22 +1,30 @@
 import axios from 'axios';
 import React from 'react';
-import { useSelector } from 'react-redux';
-
-import { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate} from 'react-router-dom';
+import { useContext} from 'react';
 import { useEffect, useState } from 'react';
-import { AppContext } from '../App';
+import qs from 'qs';
 
+import { AppContext } from '../App';
 import { Categories, BlockPizza, SortPizza, Skeleton } from '../components/';
 import NotFound from './NotFound';
+import { setFilters} from '../redux/slices/filterSlice';
+import { useRef } from 'react';
 
 const Home = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { searchValue } = useContext(AppContext);
+
+  const isSearchRef = useRef(false);
+  const isMountedRef = useRef(false);
   const [pizza, setPizza] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { categoryId, sort } = useSelector((state) => state.filter);
+  const { categoryId, sort, sortFields } = useSelector((state) => state.filter);
 
-  useEffect(() => {
+  const fetchPizza = () => {
     setIsLoading(true);
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     axios
@@ -27,6 +35,33 @@ const Home = () => {
         setPizza(res.data);
         setIsLoading(false);
       });
+  };
+
+  useEffect(() => {
+    if (isMountedRef.current) {
+      const querySearch = qs.stringify({
+        categoryId,
+        sort: sort.sortProperty,
+      });
+      navigate(`?${querySearch}`);
+    }
+    isMountedRef.current = true;
+  }, [categoryId, sort]);
+
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+      const sort = sortFields.find((el) => el.sortProperty === params.sort);
+      dispatch(setFilters({ ...params, sort }));
+      isSearchRef.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isSearchRef.current) {
+      fetchPizza();
+    }
+    isSearchRef.current = false;
   }, [sort, categoryId, searchValue]);
 
   return (
@@ -44,7 +79,7 @@ const Home = () => {
           : [...new Array(10)].map((_, idx) => {
               return <Skeleton key={idx} />;
             })}
-        {!pizza.length && <NotFound />}
+        {!pizza.length && !isLoading && <NotFound />}
       </div>
     </>
   );
