@@ -63,7 +63,7 @@ const Home = () => {
         <SortPizza />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
-      <div className='content__items'>
+      <div className='content__items items__pizza'>
         {!isLoading
           ? pizza.map((item) => {
               return <BlockPizza key={item.id} {...item} />;

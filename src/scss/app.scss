@@ -23,7 +23,7 @@ body {
     margin: 35px 0;
   }
 
-  &__items {
+  .items__pizza {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 		grid-template-rows: repeat(2, 1fr);
