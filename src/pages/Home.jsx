@@ -9,12 +9,7 @@ import { setActiveCategory, setSort } from '../redux/slices/filterSlice';
 
 import { Categories, BlockPizza, SortPizza, Skeleton } from '../components/';
 import NotFound from './NotFound';
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
