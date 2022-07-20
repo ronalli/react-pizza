@@ -1,8 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addItem, removeItem } from '../../redux/slices/cartSlice';
 
 const CartItem = ({ id, title, price, type, img, count, size }) => {
+  const dispatch = useDispatch();
   const sizes = useSelector((state) => state.cart.sizes);
+
+  const addItemCart = (id) => {
+    dispatch(addItem({ id }));
+    // console.log(id);
+  };
   return (
     <div className='cart__item'>
       <div className='cart__item-img'>
@@ -34,7 +41,10 @@ const CartItem = ({ id, title, price, type, img, count, size }) => {
           </svg>
         </button>
         <b>{count}</b>
-        <button className='button button--outline button--circle cart__item-count-plus'>
+        <button
+          onClick={() => addItemCart(id)}
+          className='button button--outline button--circle cart__item-count-plus'
+        >
           <svg
             width='10'
             height='10'
@@ -57,7 +67,10 @@ const CartItem = ({ id, title, price, type, img, count, size }) => {
         <b>{price * count} ₽</b>
       </div>
       <div className='cart__item-remove'>
-        <div className='button button--outline button--circle'>
+        <div
+          onClick={() => dispatch(removeItem({id}))}
+          className='button button--outline button--circle'
+        >
           <svg
             width='10'
             height='10'

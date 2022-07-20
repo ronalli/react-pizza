@@ -71,7 +71,7 @@ const Home = () => {
           : [...new Array(10)].map((_, idx) => {
               return <Skeleton key={idx} />;
             })}
-        {!pizza.length && <NotFound />}
+        {!pizza.length && !isLoading && <NotFound />}
       </div>
     </>
   );

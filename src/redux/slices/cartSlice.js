@@ -23,10 +23,16 @@ export const cartSlice = createSlice({
       );
     },
     removeItem(state, action) {
-      state.items = state.items.filter((obj) => obj.id !== action.payload);
+      const removeItem = state.items.find(
+        (obj) => obj.id === action.payload.id
+      );
+      state.items = state.items.filter((obj) => obj.id !== action.payload.id);
+      state.totalPrice = state.totalPrice - removeItem.price * removeItem.count;
     },
+
     clearCart(state) {
       state.items = [];
+      state.totalPrice = 0;
     },
   },
 });
