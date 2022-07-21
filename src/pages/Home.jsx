@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { AppContext } from '../App';
 import { setActiveCategory, setSort } from '../redux/slices/filterSlice';
+import { setItems } from '../redux/slices/pizzaSlice';
 
 import { Categories, BlockPizza, SortPizza, Skeleton } from '../components/';
 import NotFound from './NotFound';
@@ -15,10 +16,10 @@ const Home = () => {
   const location = useLocation();
 
   const { searchValue } = useContext(AppContext);
-  const [pizza, setPizza] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const { categoryId, sort, sortFields } = useSelector((state) => state.filter);
+  const { items, status } = useSelector((state) => state.pizza);
 
   const requestPizz = async () => {
     setIsLoading(true);
@@ -28,7 +29,7 @@ const Home = () => {
         const response = await axios.get(
           `http://localhost:3001/data?${category}&_sort=${sort.sortProperty}&_order=desc&title_like=${searchValue}`
         );
-        setPizza(response.data);
+        dispatch(setItems(response.data));
       } catch (error) {
         console.error(error);
       } finally {
@@ -71,13 +72,13 @@ const Home = () => {
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items items__pizza'>
         {!isLoading
-          ? pizza.map((item) => {
+          ? items.map((item) => {
               return <BlockPizza key={item.id} {...item} />;
             })
           : [...new Array(10)].map((_, idx) => {
               return <Skeleton key={idx} />;
             })}
-        {!pizza.length && !isLoading && <NotFound />}
+        {!items.length && !isLoading && <NotFound />}
       </div>
     </>
   );
