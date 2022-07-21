@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { AppContext } from '../App';
 import { setActiveCategory, setSort } from '../redux/slices/filterSlice';
-import { setItems } from '../redux/slices/pizzaSlice';
+import { fetchPizzaStatus, setItems } from '../redux/slices/pizzaSlice';
 
 import { Categories, BlockPizza, SortPizza, Skeleton } from '../components/';
 import NotFound from './NotFound';
@@ -16,25 +16,20 @@ const Home = () => {
   const location = useLocation();
 
   const { searchValue } = useContext(AppContext);
-  const [isLoading, setIsLoading] = useState(true);
 
   const { categoryId, sort, sortFields } = useSelector((state) => state.filter);
   const { items, status } = useSelector((state) => state.pizza);
 
   const requestPizz = async () => {
-    setIsLoading(true);
     if (categoryId !== null) {
       let category = categoryId > 0 ? `category=${categoryId}` : '';
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/data?${category}&_sort=${sort.sortProperty}&_order=desc&title_like=${searchValue}`
-        );
-        dispatch(setItems(response.data));
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
+      dispatch(
+        fetchPizzaStatus({
+          category,
+          sort: sort.sortProperty,
+          searchValue,
+        })
+      );
     }
   };
 
@@ -52,16 +47,13 @@ const Home = () => {
   }, [searchParams]);
 
   useEffect(() => {
+    requestPizz();
     if (categoryId === 0) {
       setSearchParams({});
     } else {
       setSearchParams({ category: categoryId, sort: sort.sortProperty });
     }
-  }, [categoryId, sort]);
-
-  useEffect(() => {
-    requestPizz();
-  }, [sort, categoryId, searchValue]);
+  }, [categoryId, sort, searchValue]);
 
   return (
     <>
@@ -71,14 +63,17 @@ const Home = () => {
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items items__pizza'>
-        {!isLoading
-          ? items.map((item) => {
-              return <BlockPizza key={item.id} {...item} />;
-            })
-          : [...new Array(10)].map((_, idx) => {
-              return <Skeleton key={idx} />;
-            })}
-        {!items.length && !isLoading && <NotFound />}
+        {status === 'success' ? (
+          items.map((item) => {
+            return <BlockPizza key={item.id} {...item} />;
+          })
+        ) : status === 'loading' ? (
+          [...new Array(10)].map((_, idx) => {
+            return <Skeleton key={idx} />;
+          })
+        ) : (
+          <NotFound />
+        )}
       </div>
     </>
   );
