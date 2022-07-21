@@ -1,9 +1,7 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useContext } from 'react';
-import { useEffect, useState } from 'react';
 import { AppContext } from '../App';
 import { setActiveCategory, setSort } from '../redux/slices/filterSlice';
 
@@ -30,10 +28,11 @@ const Home = () => {
       );
       dispatch(setActiveCategory(category));
       dispatch(setSort(sort));
+      console.log('1', category);
     } else {
       dispatch(setActiveCategory(0));
     }
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
     if (categoryId === 0) {
@@ -41,19 +40,23 @@ const Home = () => {
     } else {
       setSearchParams({ category: categoryId, sort: sort.sortProperty });
     }
+    console.log('2', categoryId);
   }, [categoryId, sort]);
 
   useEffect(() => {
     setIsLoading(true);
-    let category = categoryId > 0 ? `category=${categoryId}` : '';
-    axios
-      .get(
-        `http://localhost:3001/data?${category}&_sort=${sort.sortProperty}&_order=desc&title_like=${searchValue}`
-      )
-      .then((res) => {
-        setPizza(res.data);
-        setIsLoading(false);
-      });
+    if (categoryId !== null) {
+      let category = categoryId > 0 ? `category=${categoryId}` : '';
+      axios
+        .get(
+          `http://localhost:3001/data?${category}&_sort=${sort.sortProperty}&_order=desc&title_like=${searchValue}`
+        )
+        .then((res) => {
+          console.log('res', res.data);
+          setPizza(res.data);
+          setIsLoading(false);
+        });
+    }
   }, [sort, categoryId, searchValue]);
 
   return (
