@@ -20,6 +20,23 @@ const Home = () => {
 
   const { categoryId, sort, sortFields } = useSelector((state) => state.filter);
 
+  const requestPizz = async () => {
+    setIsLoading(true);
+    if (categoryId !== null) {
+      let category = categoryId > 0 ? `category=${categoryId}` : '';
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/data?${category}&_sort=${sort.sortProperty}&_order=desc&title_like=${searchValue}`
+        );
+        setPizza(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
   useEffect(() => {
     if (location.search) {
       const category = searchParams.get('category');
@@ -28,7 +45,6 @@ const Home = () => {
       );
       dispatch(setActiveCategory(category));
       dispatch(setSort(sort));
-      console.log('1', category);
     } else {
       dispatch(setActiveCategory(0));
     }
@@ -40,23 +56,10 @@ const Home = () => {
     } else {
       setSearchParams({ category: categoryId, sort: sort.sortProperty });
     }
-    console.log('2', categoryId);
   }, [categoryId, sort]);
 
   useEffect(() => {
-    setIsLoading(true);
-    if (categoryId !== null) {
-      let category = categoryId > 0 ? `category=${categoryId}` : '';
-      axios
-        .get(
-          `http://localhost:3001/data?${category}&_sort=${sort.sortProperty}&_order=desc&title_like=${searchValue}`
-        )
-        .then((res) => {
-          console.log('res', res.data);
-          setPizza(res.data);
-          setIsLoading(false);
-        });
-    }
+    requestPizz();
   }, [sort, categoryId, searchValue]);
 
   return (
