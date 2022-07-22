@@ -5,6 +5,7 @@ import { SortPizza } from './Sort';
 import { Skeleton } from './Skeleton';
 import { CartItem } from './CartItem';
 import { CartEmpty } from './EmptyCart';
+import { Search } from './Search';
 
 export {
   Header,
@@ -14,4 +15,5 @@ export {
   Skeleton,
   CartItem,
   CartEmpty,
+  Search,
 };

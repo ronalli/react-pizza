@@ -1,24 +1,27 @@
-import React, { useState, useContext, useRef, useCallback } from 'react';
-import { AppContext } from '../../App';
+import React, { useState, useRef, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import debounce from 'lodash.debounce';
+import { setSearchValue } from '../../redux/slices/filterSlice';
+
 import style from './index.module.scss';
 import iconSearch from '../../assets/img/search.svg';
 import iconCancel from '../../assets/img/cancel.svg';
-import debounce from 'lodash.debounce';
 
-function Search() {
+const Search = () => {
+  const dispatch = useDispatch();
+
   const [value, setValue] = useState('');
-  const { setSearchValue } = useContext(AppContext);
   const inputRef = useRef();
 
   const clearInput = () => {
-    setSearchValue('');
+    dispatch(setSearchValue(''));
     setValue('');
     inputRef.current.focus();
   };
 
   const updateSearchValue = useCallback(
     debounce((str) => {
-      setSearchValue(str);
+      dispatch(setSearchValue(str));
     }, 200),
     []
   );
@@ -49,6 +52,6 @@ function Search() {
       )}
     </div>
   );
-}
+};
 
-export default Search;
+export { Search };

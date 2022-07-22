@@ -19,6 +19,7 @@ const initialState = {
     'Острые',
     'Закрытые',
   ],
+  searchValue: '',
 };
 
 export const filterSlice = createSlice({
@@ -31,9 +32,13 @@ export const filterSlice = createSlice({
     setSort: (state, action) => {
       state.sort = action.payload;
     },
+    setSearchValue: (state, action) => {
+      state.searchValue = action.payload;
+    },
   },
 });
 
-export const { setActiveCategory, setSort } = filterSlice.actions;
+export const { setActiveCategory, setSort, setSearchValue } =
+  filterSlice.actions;
 
 export default filterSlice.reducer;

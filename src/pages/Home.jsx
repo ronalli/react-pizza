@@ -1,10 +1,8 @@
-import axios from 'axios';
-import React, { useEffect, useState, useRef, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { AppContext } from '../App';
 import { setActiveCategory, setSort } from '../redux/slices/filterSlice';
-import { fetchPizzaStatus, setItems } from '../redux/slices/pizzaSlice';
+import { fetchPizzaStatus } from '../redux/slices/pizzaSlice';
 
 import { Categories, BlockPizza, SortPizza, Skeleton } from '../components/';
 import NotFound from './NotFound';
@@ -15,9 +13,9 @@ const Home = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const { searchValue } = useContext(AppContext);
-
-  const { categoryId, sort, sortFields } = useSelector((state) => state.filter);
+  const { categoryId, sort, sortFields, searchValue } = useSelector(
+    (state) => state.filter
+  );
   const { items, status } = useSelector((state) => state.pizza);
 
   const requestPizz = async () => {
@@ -74,6 +72,7 @@ const Home = () => {
         ) : (
           <NotFound />
         )}
+        {!items.length && status === 'success' && <NotFound />}
       </div>
     </>
   );
