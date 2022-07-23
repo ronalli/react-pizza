@@ -12,8 +12,19 @@ export const fetchPizzaStatus = createAsyncThunk(
   }
 );
 
+export const fetchItemPizza = createAsyncThunk(
+  'pizza/fetchItemPizza',
+  async (params) => {
+    const { id } = params;
+    console.log(id);
+    const { data } = await axios.get(`http://localhost:3001/data/${id}`);
+    return data;
+  }
+);
+
 const initialState = {
   items: [],
+  item: '',
   status: '',
 };
 
@@ -37,6 +48,9 @@ export const pizzaSlice = createSlice({
     [fetchPizzaStatus.rejected]: (state) => {
       state.status = 'error';
       state.items = [];
+    },
+    [fetchItemPizza.fulfilled]: (state, action) => {
+      state.item = action.payload;
     },
   },
 });

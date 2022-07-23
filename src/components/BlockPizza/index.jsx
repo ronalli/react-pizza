@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../redux/slices/cartSlice';
 
@@ -12,15 +13,18 @@ const BlockPizza = ({ id, imageUrl, title, types, sizes, price }) => {
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(0);
 
-  const selectionType = (type) => {
+  const selectionType = (e, type) => {
+    e.preventDefault();
     type === activeType ? setActiveType('') : setActiveType(type);
   };
 
-  const selectionSize = (idx) => {
+  const selectionSize = (e, idx) => {
+    e.preventDefault();
     idx === activeSize ? setActiveSize('') : setActiveSize(idx);
   };
 
-  const onClickAdd = () => {
+  const onClickAdd = (e) => {
+    e.preventDefault();
     const obj = {
       id,
       title,
@@ -33,7 +37,7 @@ const BlockPizza = ({ id, imageUrl, title, types, sizes, price }) => {
   };
 
   return (
-    <div className='pizza-block'>
+    <Link to={`pizza/${id}`} className='pizza-block'>
       <img className='pizza-block__image' src={imageUrl} alt='Pizza' />
       <h4 className='pizza-block__title'>{title}</h4>
       <div className='pizza-block__selector'>
@@ -42,7 +46,7 @@ const BlockPizza = ({ id, imageUrl, title, types, sizes, price }) => {
             return (
               <li
                 className={activeType === type ? 'active' : ''}
-                onClick={() => selectionType(type)}
+                onClick={(e) => selectionType(e, type)}
                 key={type + idx}
               >
                 {typesPizza[type]}
@@ -55,7 +59,7 @@ const BlockPizza = ({ id, imageUrl, title, types, sizes, price }) => {
             return (
               <li
                 className={activeSize === idx ? 'active' : ''}
-                onClick={() => selectionSize(idx)}
+                onClick={(e) => selectionSize(e, idx)}
                 key={size + idx}
               >
                 {size} см.
@@ -86,7 +90,7 @@ const BlockPizza = ({ id, imageUrl, title, types, sizes, price }) => {
           {cartItems ? <i>{cartItems.count}</i> : ''}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
