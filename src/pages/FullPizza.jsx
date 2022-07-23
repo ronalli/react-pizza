@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchItemPizza } from '../redux/slices/pizzaSlice';
+import { fetchItemPizza, selectPizza } from '../redux/slices/pizzaSlice';
 
 const FullPizza = () => {
   const dispatch = useDispatch();
-  const { item } = useSelector((state) => state.pizza);
+  const { item } = useSelector(selectPizza);
   let { id } = useParams();
 
   useEffect(() => {

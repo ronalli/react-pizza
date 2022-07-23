@@ -1,9 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setActiveCategory } from '../../redux/slices/filterSlice';
+import {
+  selectFilter,
+  setActiveCategory,
+} from '../../redux/slices/filterSlice';
 
 const Categories = () => {
-  const { categories, categoryId } = useSelector((state) => state.filter);
+  const { categories, categoryId } = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   const addURL = (idx) => {

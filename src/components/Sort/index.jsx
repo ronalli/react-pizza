@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSort } from '../../redux/slices/filterSlice';
+import { selectFilter, setSort } from '../../redux/slices/filterSlice';
 
 const SortPizza = () => {
   const dispatch = useDispatch();
 
   const sortRef = useRef();
   const [isVisiblePopup, setIsVisiblePopup] = useState(false);
-  const sortFields = useSelector((state) => state.filter.sortFields);
-  const sortType = useSelector((state) => state.filter.sort);
+  const { sortFields, sort: sortType } = useSelector(selectFilter);
 
   useEffect(() => {
     const handleClick = (e) => {

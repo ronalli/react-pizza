@@ -1,14 +1,14 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addItem, removeItem, minusItem } from '../../redux/slices/cartSlice';
+import { selectPizza } from '../../redux/slices/pizzaSlice';
 
 const CartItem = ({ id, title, price, type, img, count, size }) => {
   const dispatch = useDispatch();
-  const sizes = useSelector((state) => state.cart.sizes);
+  const { sizes } = useSelector(selectPizza);
 
   const addItemCart = (id) => {
     dispatch(addItem({ id }));
-    // console.log(id);
   };
   return (
     <div className='cart__item'>

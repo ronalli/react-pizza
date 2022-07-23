@@ -1,22 +1,25 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
-import { setActiveCategory, setSort } from '../redux/slices/filterSlice';
-import { fetchPizzaStatus } from '../redux/slices/pizzaSlice';
+import {
+  selectFilter,
+  setActiveCategory,
+  setSort,
+} from '../redux/slices/filterSlice';
+import { fetchPizzaStatus, selectPizza } from '../redux/slices/pizzaSlice';
 
 import { Categories, BlockPizza, SortPizza, Skeleton } from '../components/';
 import NotFound from './NotFound';
-import { useLocation, useSearchParams } from 'react-router-dom';
 
 const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const { categoryId, sort, sortFields, searchValue } = useSelector(
-    (state) => state.filter
-  );
-  const { items, status } = useSelector((state) => state.pizza);
+  const { categoryId, sort, sortFields, searchValue } =
+    useSelector(selectFilter);
+  const { items, status } = useSelector(selectPizza);
 
   const requestPizz = async () => {
     if (categoryId !== null) {

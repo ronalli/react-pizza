@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem } from '../../redux/slices/cartSlice';
+import { addItem, selectCart } from '../../redux/slices/cartSlice';
 
 const BlockPizza = ({ id, imageUrl, title, types, sizes, price }) => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) =>
-    state.cart.items.find((obj) => obj.id === id)
-  );
+  const { items } = useSelector(selectCart);
+  const cartItems = items.find((obj) => obj.id === id);
 
   const typesPizza = ['тонкое', 'традиционное'];
   const [activeType, setActiveType] = useState(types[0]);

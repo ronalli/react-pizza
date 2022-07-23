@@ -16,7 +16,6 @@ export const fetchItemPizza = createAsyncThunk(
   'pizza/fetchItemPizza',
   async (params) => {
     const { id } = params;
-    console.log(id);
     const { data } = await axios.get(`http://localhost:3001/data/${id}`);
     return data;
   }
@@ -54,6 +53,8 @@ export const pizzaSlice = createSlice({
     },
   },
 });
+
+export const selectPizza = (state) => state.pizza;
 
 export const { setItems } = pizzaSlice.actions;
 
