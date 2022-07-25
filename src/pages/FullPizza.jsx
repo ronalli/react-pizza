@@ -9,7 +9,7 @@ const FullPizza = () => {
   let { id } = useParams();
 
   useEffect(() => {
-    dispatch(fetchItemPizza({ id }));
+    dispatch(fetchItemPizza({id}));
   }, [id]);
 
   return (

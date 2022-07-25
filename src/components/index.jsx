@@ -4,7 +4,6 @@ import { BlockPizza } from './BlockPizza';
 import { SortPizza } from './Sort';
 import { Skeleton } from './Skeleton';
 import { CartItem } from './CartItem';
-import { CartEmpty } from './EmptyCart';
 import { Search } from './Search';
 
 export {
@@ -14,6 +13,5 @@ export {
   SortPizza,
   Skeleton,
   CartItem,
-  CartEmpty,
   Search,
 };

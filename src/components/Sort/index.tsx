@@ -2,15 +2,22 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFilter, setSort } from '../../redux/slices/filterSlice';
 
-const SortPizza = () => {
+const SortPizza: React.FC = () => {
   const dispatch = useDispatch();
 
-  const sortRef = useRef();
+	type SortItem = {
+		title: string;
+		sortProperty: string;
+	}
+
+  const sortRef = useRef<HTMLDivElement>(null);
   const [isVisiblePopup, setIsVisiblePopup] = useState(false);
-  const { sortFields, sort: sortType } = useSelector(selectFilter);
+  const sortFields: SortItem[] = useSelector(selectFilter);
+  const sort: SortItem = useSelector(selectFilter);
+
 
   useEffect(() => {
-    const handleClick = (e) => {
+    const handleClick = (e: any) => {
       if (!e.path.includes(sortRef.current)) {
         setIsVisiblePopup(false);
       }
@@ -21,7 +28,7 @@ const SortPizza = () => {
     return () => document.removeEventListener('click', handleClick);
   });
 
-  const selectedFieldSort = (obj) => {
+  const selectedFieldSort = (obj: SortItem) => {
     dispatch(setSort(obj));
     setIsVisiblePopup(false);
   };
@@ -43,7 +50,7 @@ const SortPizza = () => {
         </svg>
         <b>Сортировка по:</b>
         <span onClick={() => setIsVisiblePopup(!isVisiblePopup)}>
-          {sortType.title}
+          {sort.title}
         </span>
       </div>
       {isVisiblePopup && (

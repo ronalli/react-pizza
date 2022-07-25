@@ -10,3 +10,5 @@ export const store = configureStore({
     pizza,
   },
 });
+
+export type AppDispatch = typeof store.dispatch;
