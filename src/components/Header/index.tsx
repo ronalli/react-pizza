@@ -6,7 +6,7 @@ import { selectCart } from '../../redux/slices/cartSlice';
 
 import logo from '../../assets/img/pizza-logo.svg';
 
-const Header = () => {
+const Header: React.FC = () => {
   const { totalPrice, items } = useSelector(selectCart);
   return (
     <div className='header'>

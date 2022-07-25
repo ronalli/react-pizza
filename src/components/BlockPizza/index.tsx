@@ -3,26 +3,29 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, selectCart } from '../../redux/slices/cartSlice';
 
-const BlockPizza = ({ id, imageUrl, title, types, sizes, price }) => {
+
+type BlockPizzaProps = { id: number, imageUrl: string, title: string, types: number[], sizes: number[], price: string }
+
+const BlockPizza: React.FC<BlockPizzaProps> = ({ id, imageUrl, title, types, sizes, price }) => {
   const dispatch = useDispatch();
   const { items } = useSelector(selectCart);
-  const cartItems = items.find((obj) => obj.id === id);
+  const cartItems = items.find((obj: any) => obj.id === id);
 
   const typesPizza = ['тонкое', 'традиционное'];
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(0);
 
-  const selectionType = (e, type) => {
+  const selectionType = (e: any, type: number) => {
     e.preventDefault();
-    type === activeType ? setActiveType('') : setActiveType(type);
+    type === activeType ? setActiveType(NaN) : setActiveType(type);
   };
 
-  const selectionSize = (e, idx) => {
+  const selectionSize = (e: any, idx: number) => {
     e.preventDefault();
-    idx === activeSize ? setActiveSize('') : setActiveSize(idx);
+    idx === activeSize ? setActiveSize(NaN) : setActiveSize(idx);
   };
 
-  const onClickAdd = (e) => {
+  const onClickAdd = (e: any) => {
     e.preventDefault();
     const obj = {
       id,

@@ -12,7 +12,7 @@ import { fetchPizzaStatus, selectPizza } from '../redux/slices/pizzaSlice';
 import { Categories, BlockPizza, SortPizza, Skeleton } from '../components/';
 import NotFound from './NotFound';
 
-const Home = () => {
+const Home: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -25,6 +25,7 @@ const Home = () => {
     if (categoryId !== null) {
       let category = categoryId > 0 ? `category=${categoryId}` : '';
       dispatch(
+				//@ts-ignore
         fetchPizzaStatus({
           category,
           sort: sort.sortProperty,
@@ -38,7 +39,7 @@ const Home = () => {
     if (location.search) {
       const category = searchParams.get('category');
       const sort = sortFields.find(
-        (el) => el.sortProperty === searchParams.get('sort')
+        (el: any) => el.sortProperty === searchParams.get('sort')
       );
       dispatch(setActiveCategory(category));
       dispatch(setSort(sort));
@@ -65,7 +66,7 @@ const Home = () => {
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items items__pizza'>
         {status === 'success' ? (
-          items.map((item) => {
+          items.map((item: any) => {
             return <BlockPizza key={item.id} {...item} />;
           })
         ) : status === 'loading' ? (

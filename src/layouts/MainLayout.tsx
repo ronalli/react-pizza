@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Header, Search } from '../components';
 
-const MainLayout = () => {
+const MainLayout: React.FC = () => {
   return (
     <div className='wrapper'>
       <Header />

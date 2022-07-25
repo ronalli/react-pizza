@@ -3,12 +3,13 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchItemPizza, selectPizza } from '../redux/slices/pizzaSlice';
 
-const FullPizza = () => {
+const FullPizza: React.FC = () => {
   const dispatch = useDispatch();
   const { item } = useSelector(selectPizza);
   let { id } = useParams();
 
   useEffect(() => {
+		//@ts-ignore
     dispatch(fetchItemPizza({id}));
   }, [id]);
 

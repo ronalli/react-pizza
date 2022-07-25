@@ -3,11 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addItem, removeItem, minusItem } from '../../redux/slices/cartSlice';
 import { selectPizza } from '../../redux/slices/pizzaSlice';
 
-const CartItem = ({ id, title, price, type, img, count, size }) => {
+
+type CartItemProps = { id: number, title: string, price: number, type: string, img: string, count: number, size: number }
+
+const CartItem: React.FC<CartItemProps> = ({ id, title, price, type, img, count, size }) => {
   const dispatch = useDispatch();
   const { sizes } = useSelector(selectPizza);
 
-  const addItemCart = (id) => {
+  const addItemCart = (id: number) => {
     dispatch(addItem({ id }));
   };
   return (

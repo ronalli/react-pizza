@@ -5,23 +5,24 @@ import {
   setActiveCategory,
 } from '../../redux/slices/filterSlice';
 
-const Categories = () => {
+const Categories: React.FC = () => {
+
   const { categories, categoryId } = useSelector(selectFilter);
   const dispatch = useDispatch();
 
-  const addURL = (idx) => {
-    dispatch(setActiveCategory(idx));
+  const addURL = (i: number) => {
+    dispatch(setActiveCategory(i));
   };
 
   return (
     <>
       <div className='categories'>
         <ul>
-          {categories.map((item, idx) => (
+          {categories.map((item: string, i: number) => (
             <li
-              key={idx}
-              onClick={() => addURL(idx)}
-              className={categoryId === idx ? 'active' : ''}
+              key={i}
+              onClick={() => addURL(i)}
+              className={categoryId === i ? 'active' : ''}
             >
               {item}
             </li>
