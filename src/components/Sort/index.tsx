@@ -10,6 +10,10 @@ const SortPizza: React.FC = () => {
 		sortProperty: string;
 	}
 
+	type PopupClick = MouseEvent & {
+		path: Node[]
+	}
+
   const sortRef = useRef<HTMLDivElement>(null);
   const [isVisiblePopup, setIsVisiblePopup] = useState(false);
   const sortFields: SortItem[] = useSelector(selectFilter);
@@ -17,13 +21,14 @@ const SortPizza: React.FC = () => {
 
 
   useEffect(() => {
-    const handleClick = (e: any) => {
-      if (!e.path.includes(sortRef.current)) {
+    const handleClick = (e: MouseEvent) => {
+			const _e = e as PopupClick;
+      if (sortRef.current && !_e.path.includes(sortRef.current)) {
         setIsVisiblePopup(false);
       }
     };
 
-    document.addEventListener('click', handleClick);
+    document.body.addEventListener('click', handleClick);
 
     return () => document.removeEventListener('click', handleClick);
   });

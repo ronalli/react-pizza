@@ -15,17 +15,17 @@ const BlockPizza: React.FC<BlockPizzaProps> = ({ id, imageUrl, title, types, siz
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(0);
 
-  const selectionType = (e: any, type: number) => {
+  const selectionType = (e: React.MouseEvent<HTMLLIElement>, type: number) => {
     e.preventDefault();
     type === activeType ? setActiveType(NaN) : setActiveType(type);
   };
 
-  const selectionSize = (e: any, idx: number) => {
+  const selectionSize = (e: React.MouseEvent<HTMLLIElement>, idx: number) => {
     e.preventDefault();
     idx === activeSize ? setActiveSize(NaN) : setActiveSize(idx);
   };
 
-  const onClickAdd = (e: any) => {
+  const onClickAdd = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     const obj = {
       id,
