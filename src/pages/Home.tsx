@@ -53,7 +53,7 @@ const Home: React.FC = () => {
     if (categoryId === 0) {
       setSearchParams({});
     } else {
-      setSearchParams({ category: categoryId, sort: sort.sortProperty });
+      setSearchParams({ category: String(categoryId), sort: sort.sortProperty });
     }
   }, [categoryId, sort, searchValue]);
 

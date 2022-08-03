@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectFilter, setSort } from '../../redux/slices/filterSlice';
+import { selectFilter, setSort, SortItem } from '../../redux/slices/filterSlice';
 
 const SortPizza: React.FC = () => {
   const dispatch = useDispatch();
 
-	type SortItem = {
-		title: string;
-		sortProperty: string;
-	}
+	// type SortItem = {
+	// 	title: string;
+	// 	sortProperty: string;
+	// }
 
 	type PopupClick = MouseEvent & {
 		path: Node[]
@@ -16,8 +16,8 @@ const SortPizza: React.FC = () => {
 
   const sortRef = useRef<HTMLDivElement>(null);
   const [isVisiblePopup, setIsVisiblePopup] = useState(false);
-  const sortFields: SortItem[] = useSelector(selectFilter);
-  const sort: SortItem = useSelector(selectFilter);
+  const {sortFields, sort} = useSelector(selectFilter);
+  // const sort = useSelector(selectFilter);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
