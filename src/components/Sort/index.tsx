@@ -19,7 +19,6 @@ const SortPizza: React.FC = () => {
   const sortFields: SortItem[] = useSelector(selectFilter);
   const sort: SortItem = useSelector(selectFilter);
 
-
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
 			const _e = e as PopupClick;
