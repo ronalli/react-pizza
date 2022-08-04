@@ -41,7 +41,7 @@ const Home: React.FC = () => {
       const sort = sortFields.find(
         (el: any) => el.sortProperty === searchParams.get('sort')
       );
-      dispatch(setActiveCategory(category));
+      dispatch(setActiveCategory(Number(category)));
       dispatch(setSort(sort));
     } else {
       dispatch(setActiveCategory(0));

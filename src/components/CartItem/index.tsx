@@ -1,14 +1,13 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addItem, removeItem, minusItem } from '../../redux/slices/cartSlice';
-import { selectPizza } from '../../redux/slices/pizzaSlice';
+import { addItem, removeItem, minusItem, selectCart } from '../../redux/slices/cartSlice';
 
 
 type CartItemProps = { id: number, title: string, price: number, type: string, img: string, count: number, size: number }
 
 const CartItem: React.FC<CartItemProps> = ({ id, title, price, type, img, count, size }) => {
   const dispatch = useDispatch();
-  const { sizes } = useSelector(selectPizza);
+  const { sizes } = useSelector(selectCart);
 
   const addItemCart = (id: number) => {
     dispatch(addItem({ id }));
@@ -26,7 +25,7 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, type, img, count,
       </div>
       <div className='cart__item-count'>
         <button
-          onClick={() => dispatch(minusItem({ id }))}
+          onClick={() => dispatch(minusItem(id))}
           className='button button--outline button--circle cart__item-count-minus'
         >
           <svg
@@ -74,7 +73,7 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, type, img, count,
       </div>
       <div className='cart__item-remove'>
         <div
-          onClick={() => dispatch(removeItem({ id }))}
+          onClick={() => dispatch(removeItem(id))}
           className='button button--outline button--circle'
         >
           <svg

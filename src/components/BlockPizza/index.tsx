@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, selectCart } from '../../redux/slices/cartSlice';
+import { addItem, CartItem, selectCart } from '../../redux/slices/cartSlice';
 
 
 type BlockPizzaProps = { id: number, imageUrl: string, title: string, types: number[], sizes: number[], price: number }
@@ -27,13 +27,14 @@ const BlockPizza: React.FC<BlockPizzaProps> = ({ id, imageUrl, title, types, siz
 
   const onClickAdd = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    const obj = {
+    const obj: CartItem = {
       id,
       title,
       price,
-      img: imageUrl,
+      imageUrl,
       type: typesPizza[activeType],
       size: activeSize,
+			count: 0
     };
     dispatch(addItem(obj));
   };
