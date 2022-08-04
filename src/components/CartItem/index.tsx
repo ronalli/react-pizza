@@ -1,21 +1,24 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addItem, removeItem, minusItem, selectCart } from '../../redux/slices/cartSlice';
+import { addItem, removeItem, minusItem, selectCart} from '../../redux/slices/cartSlice';
+import {CartItem as Cart} from '../../redux/slices/cartSlice'
 
 
-type CartItemProps = { id: number, title: string, price: number, type: string, img: string, count: number, size: number }
+type CartItemProps = { id: number, title: string, price: number, type: string, imageUrl: string, count: number, size: number }
 
-const CartItem: React.FC<CartItemProps> = ({ id, title, price, type, img, count, size }) => {
+const CartItem: React.FC<CartItemProps> = ({ id, title, price, type, imageUrl, count, size }) => {
   const dispatch = useDispatch();
   const { sizes } = useSelector(selectCart);
 
   const addItemCart = (id: number) => {
-    dispatch(addItem({ id }));
+    dispatch(addItem({ id } as Cart));
   };
+
+	console.log(imageUrl)
   return (
     <div className='cart__item'>
       <div className='cart__item-img'>
-        <img className='pizza-block__image' src={img} alt='Pizza' />
+        <img className='pizza-block__image' src={imageUrl} alt='Pizza' />
       </div>
       <div className='cart__item-info'>
         <h3>{title}</h3>

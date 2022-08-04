@@ -1,14 +1,14 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { CartItem } from '../components';
 import CartEmpty from './EmptyCart';
-import { clearCart, selectCart } from '../redux/slices/cartSlice';
+import { CartItem as Cart, clearCart, selectCart } from '../redux/slices/cartSlice';
+import { CartItem } from '../components';
 
-const Cart: React.FC = () => {
+const CartBlock: React.FC = () => {
   const dispatch = useDispatch();
   const { items, totalPrice } = useSelector(selectCart);
-  const totalCount = items.reduce((sum: number, obj: any) => (sum += obj.count), 0);
+  const totalCount = items.reduce((sum: number, obj: Cart) => (sum += obj.count), 0);
 
   const onClickClear = () => {
     dispatch(clearCart());
@@ -93,7 +93,7 @@ const Cart: React.FC = () => {
         </div>
         <div className='content__items'>
           {items.length
-            ? items.map((obj: any) => {
+            ? items.map((obj: Cart) => {
                 return <CartItem key={obj.id} {...obj} />;
               })
             : 'Корзина пуста '}
@@ -144,4 +144,4 @@ const Cart: React.FC = () => {
   );
 };
 
-export default Cart;
+export default CartBlock;

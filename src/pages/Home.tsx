@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
 import {
@@ -11,10 +11,11 @@ import { fetchPizzaStatus, selectPizza } from '../redux/slices/pizzaSlice';
 
 import { Categories, BlockPizza, SortPizza, Skeleton } from '../components/';
 import NotFound from './NotFound';
+import { useAppDispatch } from '../redux/store';
 
 const Home: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
 
   const { categoryId, sort, sortFields, searchValue } =
@@ -25,7 +26,6 @@ const Home: React.FC = () => {
     if (categoryId !== null) {
       let category = categoryId > 0 ? `category=${categoryId}` : '';
       dispatch(
-				//@ts-ignore
         fetchPizzaStatus({
           category,
           sort: sort.sortProperty,
@@ -42,7 +42,7 @@ const Home: React.FC = () => {
         (el: any) => el.sortProperty === searchParams.get('sort')
       );
       dispatch(setActiveCategory(Number(category)));
-      dispatch(setSort(sort));
+			dispatch(setSort(sort ? sort : sortFields[0]));
     } else {
       dispatch(setActiveCategory(0));
     }
