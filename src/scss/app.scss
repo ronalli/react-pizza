@@ -157,6 +157,20 @@ body {
             display: none;
           }
         }
+				
+				&:disabled {
+					background-color: transparent;
+					opacity: 0.4;
+					border-color: rgb(199, 195, 195);
+					svg {
+						path {
+							fill:rgb(199, 195, 195)
+						}
+					}
+					&:active {
+						transform: none;
+					}
+				}
       }
 
       b {
